@@ -1,4 +1,46 @@
-var express = require ('express');
-var mongoose = require ('mongoose');
-var bodyParser = require ('body-parser');
-app = express ();
+var express = require ('express'),
+    mongoose = require ('mongoose'),
+    bodyParser = require ('body-parser'),
+    app = express ();
+
+// APP CONFIG
+mongoose.connect("mongodb://localhost/restful_blog_app");
+app.set("view engine", "ejs");
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({extended: true}));
+
+// MONGOOSE/MODEL CONFIG
+var blogSchema = new mongoose.Schema({
+      title: String,
+      image: String,
+      body: String,
+      created: {type: Date, default: Date.now}
+});
+var Blog = mongoose.model("Blog", blogSchema);
+
+// Blog.create({
+//       title: "Test Blog 2",
+//       image: "https://images.unsplash.com/photo-1505841008129-747c07f3ec41?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e4241e9d76dd3c695c4c48b12c3a39ab&auto=format&fit=crop&w=500&q=60",
+//       body: "This is 2nd test blog post"
+// });
+
+// RESTFUL ROUTES
+
+app.get("/", function(req, res){
+      res.redirect("/blogs");
+})
+
+app.get("/blogs", function(req, res){
+      Blog.find({}, function(err, blogs){
+        if(err){
+          console.log("ERROR!");
+        } else {
+          res.render("index", {blogs: blogs});
+        }
+      });
+});
+
+
+app.listen(3000, function(){
+      console.log("SERVER IS UP! LISTENING AT PORT 3000")  
+});
