@@ -74,7 +74,7 @@ app.get("/blogs/:id", function(req, res){
 // EDIT ROUTE
 app.get("/blogs/:id/edit", function(req, res){
   Blog.findById(req.params.id, function(err, foundBlog){
-    if (err){
+    if(err){
       res.redirect("/blogs");
     } else{
         res.render("edit", {blog: foundBlog});
@@ -82,8 +82,8 @@ app.get("/blogs/:id/edit", function(req, res){
   });
 });
 
-//UPDATE ROUTE
-app.put("/blog/:id", function(req, res){
+// UPDATE ROUTE
+app.put("/blogs/:id", function(req, res){
   Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
     if(err){
         res.redirect("/blogs");
@@ -92,6 +92,7 @@ app.put("/blog/:id", function(req, res){
     }
   });
 });
+
 
 app.listen(3000, function(){
       console.log("SERVER IS UP! LISTENING AT PORT 3000")  
