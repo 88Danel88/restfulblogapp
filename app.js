@@ -9,7 +9,7 @@ var express = require ('express'),
 //local
 //mongoose.connect("mongodb://localhost:27017/restful_blog_app", { useNewUrlParser: true });
 //mLab
-mongoose.connect("mongodb://danel:12wq!@WQ@ds243212.mlab.com:43212/restful_blog_app");
+mongoose.connect("mongodb://danel:1babylove@ds243212.mlab.com:43212/restful_blog_app");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
